@@ -28,6 +28,10 @@ print(f'{Fore.GREEN}\nPress CTRL+INS to start. Close CMD to kill the program.\n{
 # Define main function
 def handle_keypress():
     
+    #Duplicate checker setup
+    check = str("")
+    check_count = int(0)
+    
     # Notes and user input
     print(f'{Fore.RED}IMPORTANT - SORT PAGES BY NUMBER ASCENDING!!\n{Style.RESET_ALL}')
     try:
@@ -59,13 +63,25 @@ def handle_keypress():
         # Copy the selected text to the clipboard
         time.sleep(0.1)
         pyautogui.hotkey('ctrl','a')
-        time.sleep(0.2)
+        time.sleep(0.13)
         pyautogui.hotkey('ctrl','c')
-        time.sleep(0.2)
-
+        time.sleep(0.13)
+        
+        
         # Retrieve the text from the clipboard
         clipboard_text = pyperclip.paste()
-
+        
+        #Checker while loop
+        while clipboard_text == check :
+            print(f'{Fore.RED}Copy error. Trying again.\n{Style.RESET_ALL}')
+            time.sleep(0.2)
+            pyautogui.hotkey('ctrl','a')
+            time.sleep(0.13)
+            pyautogui.hotkey('ctrl','c')
+            time.sleep(0.13)
+            clipboard_text = pyperclip.paste()
+            check_count = check_count + 1
+            
         # Split the text into two strings delimited by var
         text_parts = clipboard_text.split(delim,1)
         #text_parts = clipboard_text.split(' ',1)
@@ -89,12 +105,16 @@ def handle_keypress():
         # Field return to neutral
         keyboard.press_and_release('shift+tab')
         time.sleep(0.1)
+        
+        #Set Checker
+        check = clipboard_text
 
     # End timer for duration and tell echo end of iteration with stats 
     end = time.time()
     progress.stop()
     print(
-        f"{Fore.YELLOW}Done. Time elapsed: {Fore.GREEN}{str(round(end - start, 2))} (AVG Split: {str(round((end - start)/pages, 2))}){Fore.YELLOW} Seconds. Press hotkey to start again.{Style.RESET_ALL}"
+        f"{Fore.RED}Total number of errors = {str(check_count)}"
+        f"{Fore.YELLOW}\nDone. Time elapsed: {Fore.GREEN}{str(round(end - start, 2))} (AVG Split: {str(round((end - start)/pages, 2))}){Fore.YELLOW} Seconds. Press hotkey to start again.{Style.RESET_ALL}"
     )
     
 

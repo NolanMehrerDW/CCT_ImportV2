@@ -1,7 +1,5 @@
-Version.09072023
+Version.11182023
 
--Test commit
--Transition to work account
--Migrate to new branch
--Fixes some auth errors
--New PAT
+-New checker loop to avoid duplicates that need manual fixing
+-Tightened timing to account for better error handling
+

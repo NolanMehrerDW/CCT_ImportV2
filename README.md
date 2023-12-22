@@ -1,5 +1,5 @@
-Version.11182023
+Version.12222023
 
--New checker loop to avoid duplicates that need manual fixing
--Tightened timing to account for better error handling
+-Updated PIP for package handling
+
 
